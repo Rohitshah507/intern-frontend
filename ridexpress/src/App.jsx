@@ -13,6 +13,7 @@ import Signup from "./Pages/Admin/User/Signup";
 import { ForgotPassword, ResetPassword } from "./Pages/Admin/User/PasswordReset";
 import Vehicles from "./Pages/Admin/User/Vehicles";
 import VehicleDetail from "./Pages/Admin/User/VehicleDetail";
+import BookVehicle from "./Pages/Admin/User/BookVehicle";
 import MyBookings from "./Pages/Admin/User/MyBookings";
 
 // Admin Pages
@@ -43,6 +44,7 @@ export default function App() {
             {/* Protected user routes */}
             <Route element={<ProtectedRoute />}>
               <Route path="/my-bookings" element={<MyBookings />} />
+              <Route path="/book/:id" element={<BookVehicle />} />
             </Route>
           </Route>
 

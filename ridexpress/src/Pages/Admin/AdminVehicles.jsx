@@ -30,38 +30,38 @@ function VehicleModal({ vehicle, onClose, onSaved }) {
 
   return (
     <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.75)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:200,padding:"24px"}} onClick={e => e.target === e.currentTarget && onClose()}>
-      <div style={{background:"#0d0d1a",border:"1px solid rgba(255,200,50,0.2)",borderRadius:"20px",padding:"36px",width:"100%",maxWidth:"560px",maxHeight:"90vh",overflowY:"auto",fontFamily:"'Syne',sans-serif"}}>
-        <h2 style={{fontSize:"1.2rem",fontWeight:800,color:"#fff",marginBottom:"24px"}}>{vehicle ? "Edit Vehicle" : "Add New Vehicle"}</h2>
+      <div style={{background:"var(--surface)",border:"1px solid var(--border)",borderRadius:"20px",padding:"28px",width:"100%",maxWidth:"560px",maxHeight:"90vh",overflowY:"auto",fontFamily:"'Syne',sans-serif",boxShadow:"0 18px 50px rgba(17,17,17,0.12)"}}>
+        <h2 style={{fontSize:"1.2rem",fontWeight:900,color:"var(--text)",marginBottom:"24px"}}>{vehicle ? "Edit Vehicle" : "Add New Vehicle"}</h2>
         {error && <div style={{background:"rgba(255,60,60,0.1)",border:"1px solid rgba(255,60,60,0.2)",color:"#ff6b6b",padding:"10px 14px",borderRadius:"10px",fontSize:"0.875rem",marginBottom:"16px"}}>{error}</div>}
         <form onSubmit={handleSubmit}>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"14px"}}>
             {[["name","Name","Toyota Corolla",true],["brand","Brand","Toyota",true],["model","Model","Corolla",true],["type","Type","Sedan",true],["year","Year","2022",false,"number"],["pricePerDay","Price per Day","2500",true,"number"]].map(([name,label,ph,req,type="text"]) => (
               <div key={name}>
-                <label style={{display:"block",color:"rgba(255,255,255,0.5)",fontSize:"0.72rem",fontWeight:600,marginBottom:"7px",letterSpacing:"0.06em",textTransform:"uppercase"}}>{label}</label>
+                <label style={{display:"block",color:"var(--text-dim)",fontSize:"0.72rem",fontWeight:900,marginBottom:"7px",letterSpacing:"0.08em",textTransform:"uppercase"}}>{label}</label>
                 <input type={type} name={name} placeholder={ph} value={form[name] || ""} onChange={handleChange} required={req}
-                  style={{width:"100%",boxSizing:"border-box",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:"10px",padding:"10px 12px",color:"#fff",fontSize:"0.875rem",fontFamily:"'Syne',sans-serif",outline:"none"}} />
+                  style={{width:"100%",boxSizing:"border-box",background:"#fff",border:"1px solid rgba(17,17,17,0.14)",borderRadius:"12px",padding:"10px 12px",color:"var(--text)",fontSize:"0.875rem",fontFamily:"'Syne',sans-serif",outline:"none"}} />
               </div>
             ))}
             <div style={{gridColumn:"1/-1"}}>
-              <label style={{display:"block",color:"rgba(255,255,255,0.5)",fontSize:"0.72rem",fontWeight:600,marginBottom:"7px",letterSpacing:"0.06em",textTransform:"uppercase"}}>Description</label>
+              <label style={{display:"block",color:"var(--text-dim)",fontSize:"0.72rem",fontWeight:900,marginBottom:"7px",letterSpacing:"0.08em",textTransform:"uppercase"}}>Description</label>
               <textarea name="description" placeholder="Vehicle description..." value={form.description || ""} onChange={handleChange} rows={3}
-                style={{width:"100%",boxSizing:"border-box",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:"10px",padding:"10px 12px",color:"#fff",fontSize:"0.875rem",fontFamily:"'Syne',sans-serif",outline:"none",resize:"vertical"}} />
+                style={{width:"100%",boxSizing:"border-box",background:"#fff",border:"1px solid rgba(17,17,17,0.14)",borderRadius:"12px",padding:"10px 12px",color:"var(--text)",fontSize:"0.875rem",fontFamily:"'Syne',sans-serif",outline:"none",resize:"vertical"}} />
             </div>
             <div style={{gridColumn:"1/-1"}}>
-              <label style={{display:"block",color:"rgba(255,255,255,0.5)",fontSize:"0.72rem",fontWeight:600,marginBottom:"10px",letterSpacing:"0.06em",textTransform:"uppercase"}}>Photos</label>
-              <div style={{border:"2px dashed rgba(255,255,255,0.1)",borderRadius:"12px",padding:"20px",textAlign:"center",cursor:"pointer"}} onClick={() => fileRef.current?.click()}>
+              <label style={{display:"block",color:"var(--text-dim)",fontSize:"0.72rem",fontWeight:900,marginBottom:"10px",letterSpacing:"0.08em",textTransform:"uppercase"}}>Photos</label>
+              <div style={{border:"2px dashed rgba(17,17,17,0.18)",borderRadius:"12px",padding:"20px",textAlign:"center",cursor:"pointer",background:"rgba(244,196,48,0.10)"}} onClick={() => fileRef.current?.click()}>
                 <input ref={fileRef} type="file" multiple accept="image/*" style={{display:"none"}} onChange={e => setFiles([...e.target.files])} />
-                <div style={{color:"rgba(255,255,255,0.4)",fontSize:"0.875rem"}}>{files.length ? `${files.length} file(s) selected` : "Click to upload photos"}</div>
+                <div style={{color:"var(--text-dim)",fontSize:"0.875rem",fontWeight:800}}>{files.length ? `${files.length} file(s) selected` : "Click to upload photos"}</div>
               </div>
             </div>
             <div style={{gridColumn:"1/-1",display:"flex",alignItems:"center",gap:"10px"}}>
-              <input type="checkbox" name="available" id="avail" checked={!!form.available} onChange={handleChange} style={{width:"16px",height:"16px",accentColor:"#FFC832"}} />
-              <label htmlFor="avail" style={{color:"rgba(255,255,255,0.6)",fontSize:"0.875rem"}}>Available for booking</label>
+              <input type="checkbox" name="available" id="avail" checked={!!form.available} onChange={handleChange} style={{width:"16px",height:"16px",accentColor:"var(--gold)"}} />
+              <label htmlFor="avail" style={{color:"var(--text)",fontSize:"0.875rem",fontWeight:900}}>Available for booking</label>
             </div>
           </div>
           <div style={{display:"flex",gap:"12px",marginTop:"24px"}}>
-            <button type="button" onClick={onClose} style={{flex:1,padding:"11px",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",color:"rgba(255,255,255,0.6)",borderRadius:"10px",cursor:"pointer",fontFamily:"'Syne',sans-serif",fontWeight:600}}>Cancel</button>
-            <button type="submit" disabled={loading} style={{flex:2,padding:"11px",background:"#FFC832",color:"#0a0a0f",border:"none",borderRadius:"10px",cursor:"pointer",fontFamily:"'Syne',sans-serif",fontWeight:700}}>
+            <button type="button" onClick={onClose} style={{flex:1,padding:"11px",background:"#fff",border:"1px solid rgba(17,17,17,0.14)",color:"var(--text)",borderRadius:"12px",cursor:"pointer",fontFamily:"'Syne',sans-serif",fontWeight:900}}>Cancel</button>
+            <button type="submit" disabled={loading} style={{flex:2,padding:"11px",background:"var(--gold)",color:"#1b1300",border:"none",borderRadius:"12px",cursor:"pointer",fontFamily:"'Syne',sans-serif",fontWeight:900}}>
               {loading ? "Saving..." : vehicle ? "Update Vehicle" : "Add Vehicle"}
             </button>
           </div>
@@ -95,30 +95,31 @@ export default function AdminVehicles() {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap');
-        .adm-v { font-family: 'Syne', sans-serif; color: #fff; }
+        .adm-v { font-family: 'Syne', sans-serif; color: var(--text); }
         .adm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
         .adm-title { font-size: 1.4rem; font-weight: 800; }
-        .add-btn { padding: 10px 20px; background: #FFC832; color: #0a0a0f; border: none; border-radius: 10px; font-weight: 700; font-family: 'Syne', sans-serif; cursor: pointer; font-size: 0.875rem; transition: background 0.2s; }
-        .add-btn:hover { background: #e6b22e; }
-        .search { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 16px; color: #fff; font-size: 0.875rem; font-family: 'Syne', sans-serif; outline: none; width: 280px; }
-        .search::placeholder { color: rgba(255,255,255,0.3); }
-        .search:focus { border-color: #FFC832; }
+        .add-btn { padding: 10px 20px; background: var(--gold); color: #1b1300; border: none; border-radius: 12px; font-weight: 900; font-family: 'Syne', sans-serif; cursor: pointer; font-size: 0.875rem; transition: transform 0.12s, filter 0.12s; }
+        .add-btn:hover { filter: brightness(0.97); transform: translateY(-1px); }
+        .search { background: #fff; border: 1px solid rgba(17,17,17,0.14); border-radius: 12px; padding: 10px 16px; color: var(--text); font-size: 0.875rem; font-family: 'Syne', sans-serif; outline: none; width: 280px; }
+        .search::placeholder { color: rgba(21,21,21,0.45); }
+        .search:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(244,196,48,0.18); }
         .v-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-        .v-card { background: #0d0d1a; border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; overflow: hidden; }
-        .v-img { width: 100%; height: 160px; object-fit: cover; background: #15151f; }
-        .v-placeholder { width: 100%; height: 160px; background: #15151f; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+        .v-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; box-shadow: 0 18px 50px rgba(17,17,17,0.06); }
+        .v-img { width: 100%; height: 160px; object-fit: cover; background: #f1f1f1; }
+        .v-placeholder { width: 100%; height: 160px; background: linear-gradient(135deg, #fff6da, #ffffff); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
         .v-body { padding: 16px; }
-        .v-tag { font-size: 0.68rem; color: #FFC832; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
-        .v-name { font-weight: 700; margin-bottom: 2px; }
-        .v-sub { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
-        .v-footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.05); }
-        .v-price { font-weight: 700; color: #FFC832; font-size: 0.9rem; }
+        .v-tag { font-size: 0.68rem; color: #7a5a00; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+        .v-name { font-weight: 900; margin-bottom: 2px; color: var(--text); }
+        .v-sub { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 12px; font-weight: 700; }
+        .v-footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-top: 1px solid var(--border); background: rgba(244,196,48,0.10); }
+        .v-price { font-weight: 900; color: #7a5a00; font-size: 0.9rem; }
         .v-actions { display: flex; gap: 8px; }
-        .edit-btn { padding: 6px 12px; background: rgba(255,200,50,0.1); border: 1px solid rgba(255,200,50,0.2); color: #FFC832; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-weight: 600; font-family: 'Syne', sans-serif; }
-        .del-btn { padding: 6px 12px; background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.2); color: #ff6b6b; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-weight: 600; font-family: 'Syne', sans-serif; }
+        .edit-btn { padding: 6px 12px; background: rgba(244,196,48,0.16); border: 1px solid rgba(244,196,48,0.35); color: #7a5a00; border-radius: 10px; cursor: pointer; font-size: 0.75rem; font-weight: 900; font-family: 'Syne', sans-serif; }
+        .edit-btn:hover { filter: brightness(0.97); }
+        .del-btn { padding: 6px 12px; background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.2); color: #b42318; border-radius: 10px; cursor: pointer; font-size: 0.75rem; font-weight: 900; font-family: 'Syne', sans-serif; }
         .confirm-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 300; }
-        .confirm-box { background: #0d0d1a; border: 1px solid rgba(255,60,60,0.25); border-radius: 16px; padding: 32px; max-width: 340px; text-align: center; font-family: 'Syne', sans-serif; }
-        .loader { text-align: center; padding: 60px; color: rgba(255,255,255,0.3); }
+        .confirm-box { background: var(--surface); border: 1px solid rgba(255,60,60,0.25); border-radius: 18px; padding: 28px; max-width: 340px; text-align: center; font-family: 'Syne', sans-serif; box-shadow: 0 18px 50px rgba(17,17,17,0.12); }
+        .loader { text-align: center; padding: 60px; color: var(--text-dim); font-weight: 900; }
       `}</style>
       <div className="adm-v">
         <div className="adm-header">
@@ -148,7 +149,7 @@ export default function AdminVehicles() {
                 </div>
               </div>
             ))}
-            {!filtered.length && <div style={{gridColumn:"1/-1",textAlign:"center",padding:"60px",color:"rgba(255,255,255,0.3)"}}>No vehicles found</div>}
+            {!filtered.length && <div style={{gridColumn:"1/-1",textAlign:"center",padding:"60px",color:"var(--text-dim)",fontWeight:900}}>No vehicles found</div>}
           </div>
         )}
       </div>
@@ -159,10 +160,10 @@ export default function AdminVehicles() {
         <div className="confirm-modal">
           <div className="confirm-box">
             <div style={{fontSize:"2.5rem",marginBottom:"16px"}}>🗑️</div>
-            <div style={{fontSize:"1rem",fontWeight:700,color:"#fff",marginBottom:"8px"}}>Delete Vehicle?</div>
-            <div style={{fontSize:"0.875rem",color:"rgba(255,255,255,0.4)",marginBottom:"24px"}}>This action cannot be undone.</div>
+            <div style={{fontSize:"1rem",fontWeight:900,color:"var(--text)",marginBottom:"8px"}}>Delete Vehicle?</div>
+            <div style={{fontSize:"0.875rem",color:"var(--text-dim)",marginBottom:"24px",fontWeight:800}}>This action cannot be undone.</div>
             <div style={{display:"flex",gap:"10px",justifyContent:"center"}}>
-              <button onClick={() => setDeleteId(null)} style={{padding:"9px 20px",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",color:"rgba(255,255,255,0.6)",borderRadius:"10px",cursor:"pointer",fontFamily:"'Syne',sans-serif",fontWeight:600}}>Cancel</button>
+              <button onClick={() => setDeleteId(null)} style={{padding:"9px 20px",background:"#fff",border:"1px solid rgba(17,17,17,0.14)",color:"var(--text)",borderRadius:"12px",cursor:"pointer",fontFamily:"'Syne',sans-serif",fontWeight:900}}>Cancel</button>
               <button onClick={() => handleDelete(deleteId)} style={{padding:"9px 20px",background:"#ff4444",border:"none",color:"#fff",borderRadius:"10px",cursor:"pointer",fontFamily:"'Syne',sans-serif",fontWeight:700}}>Delete</button>
             </div>
           </div>

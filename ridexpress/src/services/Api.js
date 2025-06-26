@@ -26,7 +26,11 @@ export const authAPI = {
   signup: (body) => request("/auth/signup", { method: "POST", body }),
   login: (body) => request("/auth/login", { method: "POST", body }),
   forgotPassword: (body) => request("/auth/forgot-password", { method: "POST", body }),
-  resetPassword: (body) => request("/auth/reset-password", { method: "POST", body }),
+  resetPassword: ({ token, userId, ...body }) =>
+    request(`/auth/reset-password?token=${encodeURIComponent(token)}&userId=${encodeURIComponent(userId)}`, {
+      method: "POST",
+      body,
+    }),
 };
 
 export const vehicleAPI = {

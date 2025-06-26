@@ -39,40 +39,43 @@ export default function VehicleDetail() {
     finally { setSubmitting(false); }
   };
 
-  if (loading) return <div style={{minHeight:"60vh",display:"flex",alignItems:"center",justifyContent:"center",color:"rgba(255,255,255,0.4)",fontFamily:"'Syne',sans-serif",background:"#0a0a0f"}}>Loading vehicle...</div>;
-  if (!vehicle) return <div style={{minHeight:"60vh",display:"flex",alignItems:"center",justifyContent:"center",color:"#ff6b6b",fontFamily:"'Syne',sans-serif",background:"#0a0a0f"}}>Vehicle not found.</div>;
+  if (loading) return <div style={{minHeight:"60vh",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--text-dim)",fontFamily:"'Syne',sans-serif",background:"var(--bg)",fontWeight:800}}>Loading vehicle...</div>;
+  if (!vehicle) return <div style={{minHeight:"60vh",display:"flex",alignItems:"center",justifyContent:"center",color:"#b42318",fontFamily:"'Syne',sans-serif",background:"var(--bg)",fontWeight:900}}>Vehicle not found.</div>;
 
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap');
-        .vd-page { min-height: 60vh; background: #0a0a0f; color: #fff; font-family: 'Syne', sans-serif; padding: 48px 24px; }
+        .vd-page { min-height: 60vh; background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; padding: 48px 24px; }
         .vd-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 400px; gap: 40px; }
-        .vd-img-main { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 16px; background: #15151f; }
-        .vd-img-placeholder { width: 100%; aspect-ratio: 16/9; background: #15151f; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+        .vd-img-main { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 18px; background: #f1f1f1; }
+        .vd-img-placeholder { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, #fff6da, #ffffff); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 5rem; }
         .vd-thumbs { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-        .vd-thumb { width: 72px; height: 52px; object-fit: cover; border-radius: 8px; cursor: pointer; opacity: 0.5; transition: opacity 0.2s; border: 2px solid transparent; }
-        .vd-thumb.active { opacity: 1; border-color: #FFC832; }
-        .vd-type { font-size: 0.7rem; color: #FFC832; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+        .vd-thumb { width: 72px; height: 52px; object-fit: cover; border-radius: 10px; cursor: pointer; opacity: 0.65; transition: opacity 0.2s; border: 2px solid transparent; }
+        .vd-thumb.active { opacity: 1; border-color: rgba(244,196,48,0.95); }
+        .vd-type { font-size: 0.7rem; color: #7a5a00; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
         .vd-name { font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 6px; }
-        .vd-meta { color: rgba(255,255,255,0.45); font-size: 0.875rem; margin-bottom: 20px; }
-        .vd-price { font-size: 2rem; font-weight: 800; color: #FFC832; margin-bottom: 20px; }
-        .vd-price small { font-size: 0.9rem; color: rgba(255,255,255,0.4); font-weight: 400; }
-        .vd-desc { color: rgba(255,255,255,0.5); font-size: 0.875rem; line-height: 1.7; margin-bottom: 24px; }
-        .booking-card { background: #0d0d1a; border: 1px solid rgba(255,200,50,0.15); border-radius: 16px; padding: 28px; position: sticky; top: 88px; }
-        .booking-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
-        .b-label { display: block; color: rgba(255,255,255,0.5); font-size: 0.75rem; font-weight: 600; margin-bottom: 7px; letter-spacing: 0.05em; text-transform: uppercase; }
-        .b-input { width: 100%; box-sizing: border-box; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 12px; color: #fff; font-size: 0.875rem; font-family: 'Syne', sans-serif; outline: none; margin-bottom: 14px; transition: border-color 0.2s; }
-        .b-input:focus { border-color: #FFC832; }
-        .b-input::placeholder { color: rgba(255,255,255,0.25); }
-        .b-summary { background: rgba(255,200,50,0.06); border-radius: 10px; padding: 14px; margin-bottom: 16px; }
-        .b-row { display: flex; justify-content: space-between; font-size: 0.875rem; color: rgba(255,255,255,0.5); margin-bottom: 6px; }
-        .b-total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 700; color: #FFC832; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,200,50,0.2); }
-        .b-btn { width: 100%; padding: 13px; background: #FFC832; color: #0a0a0f; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: 'Syne', sans-serif; transition: all 0.2s; }
-        .b-btn:hover:not(:disabled) { background: #e6b22e; }
+        .vd-meta { color: var(--text-dim); font-size: 0.875rem; margin-bottom: 20px; font-weight: 700; }
+        .vd-price { font-size: 2rem; font-weight: 900; color: #7a5a00; margin-bottom: 20px; }
+        .vd-price small { font-size: 0.9rem; color: var(--text-dim); font-weight: 800; }
+        .vd-desc { color: var(--text-dim); font-size: 0.875rem; line-height: 1.7; margin-bottom: 24px; font-weight: 700; }
+        .booking-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 22px; position: sticky; top: 88px; box-shadow: 0 18px 50px rgba(17,17,17,0.08); }
+        .booking-title { display:flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+        .booking-title a { font-size: 0.78rem; color: #7a5a00; font-weight: 900; text-decoration: none; }
+        .booking-title a:hover { text-decoration: underline; }
+        .b-label { display: block; color: var(--text-dim); font-size: 0.75rem; font-weight: 900; margin-bottom: 7px; letter-spacing: 0.08em; text-transform: uppercase; }
+        .b-input { width: 100%; box-sizing: border-box; background: #fff; border: 1px solid rgba(17,17,17,0.14); border-radius: 12px; padding: 11px 12px; color: var(--text); font-size: 0.9rem; font-family: 'Syne', sans-serif; outline: none; margin-bottom: 14px; transition: border-color 0.2s, box-shadow 0.2s; }
+        .b-input:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(244,196,48,0.18); }
+        .b-input::placeholder { color: rgba(21,21,21,0.45); }
+        .b-summary { background: rgba(244,196,48,0.12); border-radius: 14px; padding: 14px; margin-bottom: 16px; border: 1px dashed rgba(17,17,17,0.16); }
+        .b-row { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text); font-weight: 800; margin-bottom: 6px; }
+        .b-row span:first-child { color: var(--text-dim); font-weight: 900; }
+        .b-total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 900; color: #7a5a00; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(17,17,17,0.12); }
+        .b-btn { width: 100%; padding: 13px; background: var(--gold); color: #1b1300; border: none; border-radius: 12px; font-size: 1rem; font-weight: 900; cursor: pointer; font-family: 'Syne', sans-serif; transition: all 0.2s; }
+        .b-btn:hover:not(:disabled) { filter: brightness(0.97); transform: translateY(-1px); }
         .b-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .b-error { background: rgba(255,60,60,0.1); border: 1px solid rgba(255,60,60,0.2); color: #ff6b6b; padding: 10px 12px; border-radius: 8px; font-size: 0.8rem; margin-bottom: 12px; }
-        .b-success { background: rgba(50,200,100,0.1); border: 1px solid rgba(50,200,100,0.2); color: #5ce89b; padding: 16px; border-radius: 10px; text-align: center; }
+        .b-error { background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.25); color: #b42318; padding: 10px 12px; border-radius: 12px; font-size: 0.85rem; margin-bottom: 12px; font-weight: 800; }
+        .b-success { background: rgba(50,200,100,0.12); border: 1px solid rgba(50,200,100,0.25); color: #146c43; padding: 16px; border-radius: 14px; text-align: center; }
         @media(max-width: 768px) { .vd-inner { grid-template-columns: 1fr; } .booking-card { position: static; } }
       `}</style>
       <div className="vd-page">
@@ -98,9 +101,9 @@ export default function VehicleDetail() {
               {vehicle.description && <div className="vd-desc">{vehicle.description}</div>}
               <div style={{display:"flex",gap:"10px",flexWrap:"wrap"}}>
                 {[["Type", vehicle.type],["Brand", vehicle.brand],["Model", vehicle.model],["Year", vehicle.year]].filter(([,v]) => v).map(([label, val]) => (
-                  <div key={label} style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:"10px",padding:"10px 16px"}}>
-                    <div style={{fontSize:"0.7rem",color:"rgba(255,255,255,0.35)",fontWeight:600,marginBottom:"4px",textTransform:"uppercase",letterSpacing:"0.05em"}}>{label}</div>
-                    <div style={{fontSize:"0.9rem",fontWeight:600}}>{val}</div>
+                  <div key={label} style={{background:"#fff",border:"1px solid rgba(17,17,17,0.12)",borderRadius:"12px",padding:"10px 16px"}}>
+                    <div style={{fontSize:"0.7rem",color:"var(--text-dim)",fontWeight:900,marginBottom:"4px",textTransform:"uppercase",letterSpacing:"0.08em"}}>{label}</div>
+                    <div style={{fontSize:"0.9rem",fontWeight:900,color:"var(--text)"}}>{val}</div>
                   </div>
                 ))}
               </div>
@@ -108,12 +111,15 @@ export default function VehicleDetail() {
           </div>
           <div>
             <div className="booking-card">
-              <div className="booking-title">Book This Vehicle</div>
+              <div className="booking-title">
+                <span>Book This Vehicle</span>
+                <a href={`/book/${id}`}>Open booking page →</a>
+              </div>
               {bookingDone ? (
                 <div className="b-success">
                   <div style={{fontSize:"2rem",marginBottom:"12px"}}>✅</div>
                   <div style={{fontWeight:700,marginBottom:"8px"}}>Booking Confirmed!</div>
-                  <div style={{fontSize:"0.8rem",color:"rgba(255,255,255,0.5)"}}>Check My Bookings for details.</div>
+                  <div style={{fontSize:"0.8rem",color:"var(--text-dim)",fontWeight:700}}>Check My Bookings for details.</div>
                   <button className="b-btn" style={{marginTop:"16px"}} onClick={() => navigate("/my-bookings")}>View My Bookings</button>
                 </div>
               ) : (
@@ -139,7 +145,7 @@ export default function VehicleDetail() {
                   <button className="b-btn" disabled={submitting || !vehicle.available}>
                     {!vehicle.available ? "Not Available" : submitting ? "Booking..." : "Confirm Booking"}
                   </button>
-                  {!user && <p style={{fontSize:"0.75rem",color:"rgba(255,255,255,0.4)",textAlign:"center",marginTop:"10px"}}>You'll be redirected to login</p>}
+                  {!user && <p style={{fontSize:"0.75rem",color:"var(--text-dim)",textAlign:"center",marginTop:"10px",fontWeight:800}}>You'll be redirected to login</p>}
                 </form>
               )}
             </div>

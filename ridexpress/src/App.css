@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;1,400&display=swap');
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -5,13 +7,16 @@
 }
 
 :root {
-  --gold: #FFC832;
-  --gold-dim: rgba(255, 200, 50, 0.12);
-  --bg: #0a0a0f;
-  --surface: #0d0d1a;
-  --border: rgba(255, 255, 255, 0.07);
-  --text: #ffffff;
-  --text-dim: rgba(255, 255, 255, 0.45);
+  --gold: #f4c430; /* primary (yellow) */
+  --gold-dim: rgba(244, 196, 48, 0.22);
+
+  --bg: #fffaf0; /* warm white */
+  --surface: #ffffff;
+  --surface-2: #fff3cc;
+
+  --border: rgba(17, 17, 17, 0.12);
+  --text: #151515;
+  --text-dim: rgba(21, 21, 21, 0.62);
 }
 
 html {
@@ -31,14 +36,14 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0f;
+  background: #fff5dd;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 200, 50, 0.2);
+  background: rgba(244, 196, 48, 0.35);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 200, 50, 0.4);
+  background: rgba(244, 196, 48, 0.55);
 }
 
 input, select, textarea, button {
