@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;1,400&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --gold: #f4c430; /* primary (yellow) */
+  --gold-dim: rgba(244, 196, 48, 0.22);
+
+  --bg: #fffaf0; /* warm white */
+  --surface: #ffffff;
+  --surface-2: #fff3cc;
+
+  --border: rgba(17, 17, 17, 0.12);
+  --text: #151515;
+  --text-dim: rgba(21, 21, 21, 0.62);
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Syne', system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #fff5dd;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(244, 196, 48, 0.35);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(244, 196, 48, 0.55);
+}
+
+input, select, textarea, button {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
