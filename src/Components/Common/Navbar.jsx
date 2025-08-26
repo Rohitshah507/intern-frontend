@@ -8,8 +8,11 @@ export default function Navbar() {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleLogout = () => { logout(); navigate("/login"); };
-  const active = (path) => location.pathname === path ? "nav-active" : "";
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+  const active = (path) => (location.pathname === path ? "nav-active" : "");
 
   return (
     <>
@@ -74,40 +77,122 @@ export default function Navbar() {
       `}</style>
       <nav className="navbar">
         <div className="nav-inner">
-          <Link to="/" className="nav-logo">Ride<span>Xpress</span></Link>
+          <Link to="/" className="nav-logo">
+            Ride<span>Xpress</span>
+          </Link>
           <div className="nav-links">
-            <Link to="/" className={`nav-link ${active("/")}`}>Home</Link>
-            <Link to="/vehicles" className={`nav-link ${active("/vehicles")}`}>Vehicles</Link>
-            {user && <Link to="/my-bookings" className={`nav-link ${active("/my-bookings")}`}>My Bookings</Link>}
-            {isAdmin && <Link to="/admin" className="nav-link" style={{color:"#7a5a00"}}>Admin Panel</Link>}
+            <Link to="/" className={`nav-link ${active("/")}`}>
+              Home
+            </Link>
+            <Link to="/vehicles" className={`nav-link ${active("/vehicles")}`}>
+              Vehicles
+            </Link>
+            {user && (
+              <Link
+                to="/my-bookings"
+                className={`nav-link ${active("/my-bookings")}`}
+              >
+                My Bookings
+              </Link>
+            )}
+            {isAdmin && (
+              <Link
+                to="/admin"
+                className="nav-link"
+                style={{ color: "#7a5a00" }}
+              >
+                Admin Panel
+              </Link>
+            )}
             {user ? (
               <div className="nav-user">
-                <div className="nav-avatar">{user.name?.[0]?.toUpperCase() || "U"}</div>
+                <div className="nav-avatar">
+                  {user.name?.[0]?.toUpperCase() || "U"}
+                </div>
                 <span>{user.name?.split(" ")[0]}</span>
-                <button className="nav-btn nav-btn-outline" onClick={handleLogout}>Logout</button>
+                <button
+                  className="nav-btn nav-btn-outline"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
               </div>
             ) : (
               <>
-                <Link to="/login" className="nav-btn nav-btn-outline">Login</Link>
-                <Link to="/signup" className="nav-btn nav-btn-fill">Sign Up</Link>
+                <Link to="/login" className="nav-btn nav-btn-outline">
+                  Login
+                </Link>
+                <Link to="/signup" className="nav-btn nav-btn-fill">
+                  Sign Up
+                </Link>
               </>
             )}
           </div>
           <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
-            <span className="ham-line"></span><span className="ham-line"></span><span className="ham-line"></span>
+            <span className="ham-line"></span>
+            <span className="ham-line"></span>
+            <span className="ham-line"></span>
           </button>
         </div>
-        <div className="nav-mobile" style={menuOpen ? {display:"flex"} : {}}>
-          <Link to="/" className="nav-link" onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to="/vehicles" className="nav-link" onClick={() => setMenuOpen(false)}>Vehicles</Link>
-          {user && <Link to="/my-bookings" className="nav-link" onClick={() => setMenuOpen(false)}>My Bookings</Link>}
-          {isAdmin && <Link to="/admin" className="nav-link" style={{color:"#7a5a00"}} onClick={() => setMenuOpen(false)}>Admin Panel</Link>}
+        <div className="nav-mobile" style={menuOpen ? { display: "flex" } : {}}>
+          <Link to="/" className="nav-link" onClick={() => setMenuOpen(false)}>
+            Home
+          </Link>
+          <Link
+            to="/vehicles"
+            className="nav-link"
+            onClick={() => setMenuOpen(false)}
+          >
+            Vehicles
+          </Link>
+          {user && (
+            <Link
+              to="/my-bookings"
+              className="nav-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              My Bookings
+            </Link>
+          )}
+          {isAdmin && (
+            <Link
+              to="/admin"
+              className="nav-link"
+              style={{ color: "#7a5a00" }}
+              onClick={() => setMenuOpen(false)}
+            >
+              Admin Panel
+            </Link>
+          )}
           {user ? (
-            <button className="nav-btn nav-btn-outline" style={{width:"fit-content",marginTop:"8px"}} onClick={() => { handleLogout(); setMenuOpen(false); }}>Logout</button>
+            <button
+              className="nav-btn nav-btn-outline"
+              style={{ width: "fit-content", marginTop: "8px" }}
+              onClick={() => {
+                handleLogout();
+                setMenuOpen(false);
+              }}
+            >
+              Logout
+            </button>
           ) : (
             <>
-              <Link to="/login" className="nav-btn nav-btn-outline" style={{width:"fit-content"}} onClick={() => setMenuOpen(false)}>Login</Link>
-              <Link to="/signup" className="nav-btn nav-btn-fill" style={{width:"fit-content"}} onClick={() => setMenuOpen(false)}>Sign Up</Link>
+              <Link
+                to="/login"
+                className="nav-btn nav-btn-outline"
+                style={{ width: "fit-content" }}
+                onClick={() => setMenuOpen(false)}
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="nav-btn nav-btn-fill"
+                style={{ width: "fit-content" }}
+                onClick={() => setMenuOpen(false)}
+              >
+                Sign Up
+              </Link>
             </>
           )}
         </div>

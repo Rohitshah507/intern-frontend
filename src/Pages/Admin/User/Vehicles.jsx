@@ -10,12 +10,21 @@ export default function Vehicles() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    vehicleAPI.getAll().then(d => setVehicles(d.data || d.vehicles || d || [])).catch(e => setError(e.message)).finally(() => setLoading(false));
+    vehicleAPI
+      .getAll()
+      .then((d) => setVehicles(d.data || d.vehicles || d || []))
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
   }, []);
 
-  const types = ["all", ...new Set(vehicles.map(v => v.type).filter(Boolean))];
-  const filtered = vehicles.filter(v => {
-    const matchSearch = `${v.name} ${v.brand} ${v.model}`.toLowerCase().includes(search.toLowerCase());
+  const types = [
+    "all",
+    ...new Set(vehicles.map((v) => v.type).filter(Boolean)),
+  ];
+  const filtered = vehicles.filter((v) => {
+    const matchSearch = `${v.name} ${v.brand} ${v.model}`
+      .toLowerCase()
+      .includes(search.toLowerCase());
     const matchFilter = filter === "all" || v.type === filter;
     return matchSearch && matchFilter;
   });
@@ -80,48 +89,105 @@ export default function Vehicles() {
       <div className="vehicles-page">
         <div className="vehicles-inner">
           <div className="page-header">
-            <h1 className="page-title">Our <span>Fleet</span></h1>
-            <p className="page-sub">{vehicles.length} vehicles available for rent</p>
+            <h1 className="page-title">
+              Our <span>Fleet</span>
+            </h1>
+            <p className="page-sub">
+              {vehicles.length} vehicles available for rent
+            </p>
           </div>
           <div className="filters">
-            <input className="search-input" placeholder="Search by name, brand, model..." value={search} onChange={e => setSearch(e.target.value)} />
-            {types.map(t => (
-              <button key={t} className={`filter-btn ${filter === t ? "active" : ""}`} onClick={() => setFilter(t)}>{t}</button>
+            <input
+              className="search-input"
+              placeholder="Search by name, brand, model..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {types.map((t) => (
+              <button
+                key={t}
+                className={`filter-btn ${filter === t ? "active" : ""}`}
+                onClick={() => setFilter(t)}
+              >
+                {t}
+              </button>
             ))}
           </div>
           {loading && <div className="loader">Loading vehicles...</div>}
-          {error && <div className="loader" style={{color:"#b42318"}}>{error}</div>}
-          {!loading && !error && (
-            filtered.length ? (
+          {error && (
+            <div className="loader" style={{ color: "#b42318" }}>
+              {error}
+            </div>
+          )}
+          {!loading &&
+            !error &&
+            (filtered.length ? (
               <div className="vehicles-grid">
-                {filtered.map(v => (
+                {filtered.map((v) => (
                   <div className="v-card" key={v._id}>
                     {v.imageUrls?.[0] ? (
-                      <img className="v-img" src={v.imageUrls[0]} alt={v.name} />
+                      <img
+                        className="v-img"
+                        src={v.imageUrls[0]}
+                        alt={v.name}
+                      />
                     ) : (
                       <div className="v-img-placeholder">🚗</div>
                     )}
                     <div className="v-body">
                       <div className="v-type">{v.type}</div>
                       <div className="v-name">{v.name}</div>
-                      <div className="v-brand">{v.brand} · {v.model} {v.year && `· ${v.year}`}</div>
-                      {v.description && <div style={{fontSize:"0.8rem",color:"var(--text-dim)",lineHeight:"1.6",marginBottom:"4px",fontWeight:700}}>{v.description.slice(0,80)}{v.description.length>80 ? "…" : ""}</div>}
+                      <div className="v-brand">
+                        {v.brand} · {v.model} {v.year && `· ${v.year}`}
+                      </div>
+                      {v.description && (
+                        <div
+                          style={{
+                            fontSize: "0.8rem",
+                            color: "var(--text-dim)",
+                            lineHeight: "1.6",
+                            marginBottom: "4px",
+                            fontWeight: 700,
+                          }}
+                        >
+                          {v.description.slice(0, 80)}
+                          {v.description.length > 80 ? "…" : ""}
+                        </div>
+                      )}
                       <div className="v-row">
-                        <div className="v-price">Rs. {v.pricePerDay?.toLocaleString()}<small> / day</small></div>
-                        <span className={`v-badge ${v.available ? "avail" : "unavail"}`}>{v.available ? "Available" : "Unavailable"}</span>
+                        <div className="v-price">
+                          Rs. {v.pricePerDay?.toLocaleString()}
+                          <small> / day</small>
+                        </div>
+                        <span
+                          className={`v-badge ${v.available ? "avail" : "unavail"}`}
+                        >
+                          {v.available ? "Available" : "Unavailable"}
+                        </span>
                       </div>
                       {v.available && (
                         <div className="v-actions">
-                          <Link to={`/vehicles/${v._id}`} className="v-btn ghost">Details</Link>
-                          <Link to={`/book/${v._id}`} className="v-btn primary">Book Now</Link>
+                          <Link
+                            to={`/vehicles/${v._id}`}
+                            className="v-btn ghost"
+                          >
+                            Details
+                          </Link>
+                          <Link to={`/book/${v._id}`} className="v-btn primary">
+                            Book Now
+                          </Link>
                         </div>
                       )}
                     </div>
                   </div>
                 ))}
               </div>
-            ) : <div className="empty"><div style={{fontSize:"3rem",marginBottom:"16px"}}>🔍</div><div>No vehicles found matching your search</div></div>
-          )}
+            ) : (
+              <div className="empty">
+                <div style={{ fontSize: "3rem", marginBottom: "16px" }}>🔍</div>
+                <div>No vehicles found matching your search</div>
+              </div>
+            ))}
         </div>
       </div>
     </>
