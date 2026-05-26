@@ -24,8 +24,13 @@ export default function Footer() {
         <div className="footer-inner">
           <div className="footer-grid">
             <div>
-              <div className="footer-brand">Ride<span>Xpress</span></div>
-              <p className="footer-tagline">Premium vehicle rentals for every journey. Explore Nepal in style and comfort.</p>
+              <div className="footer-brand">
+                Ride<span>Xpress</span>
+              </div>
+              <p className="footer-tagline">
+                Premium vehicle rentals for every journey. Explore Nepal in
+                style and comfort.
+              </p>
             </div>
             <div className="footer-col">
               <h4>Quick Links</h4>
@@ -41,7 +46,9 @@ export default function Footer() {
             </div>
           </div>
           <div className="footer-bottom">
-            <span className="footer-copy">© {new Date().getFullYear()} RideXpress. All rights reserved.</span>
+            <span className="footer-copy">
+              © {new Date().getFullYear()} RideXpress. All rights reserved.
+            </span>
             <span className="footer-copy">Made in Nepal 🇳🇵</span>
           </div>
         </div>

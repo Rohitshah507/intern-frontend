@@ -83,34 +83,84 @@ export default function Home() {
         <section className="hero">
           <div className="hero-inner">
             <div className="hero-badge">🚀 Nepal's Premium Rental Platform</div>
-            <h1 className="hero-title">Drive Your <em>Adventure</em> Forward</h1>
-            <p className="hero-sub">Premium vehicles, seamless booking, and unmatched service across Nepal. Your journey starts here.</p>
+            <h1 className="hero-title">
+              Drive Your <em>Adventure</em> Forward
+            </h1>
+            <p className="hero-sub">
+              Premium vehicles, seamless booking, and unmatched service across
+              Nepal. Your journey starts here.
+            </p>
             <div className="hero-ctas">
-              <Link to="/vehicles" className="btn-primary">Browse Vehicles</Link>
-              {!user && <Link to="/signup" className="btn-ghost">Create Account</Link>}
-              {user && <Link to="/my-bookings" className="btn-ghost">My Bookings</Link>}
+              <Link to="/vehicles" className="btn-primary">
+                Browse Vehicles
+              </Link>
+              {!user && (
+                <Link to="/signup" className="btn-ghost">
+                  Create Account
+                </Link>
+              )}
+              {user && (
+                <Link to="/my-bookings" className="btn-ghost">
+                  My Bookings
+                </Link>
+              )}
             </div>
           </div>
         </section>
 
         <div className="stats-row">
-          {[["500+","Vehicles Available"],["10K+","Happy Customers"],["50+","Locations"]].map(([n,l]) => (
-            <div className="stat-item" key={l}><div className="stat-num">{n}</div><div className="stat-label">{l}</div></div>
+          {[
+            ["500+", "Vehicles Available"],
+            ["10K+", "Happy Customers"],
+            ["50+", "Locations"],
+          ].map(([n, l]) => (
+            <div className="stat-item" key={l}>
+              <div className="stat-num">{n}</div>
+              <div className="stat-label">{l}</div>
+            </div>
           ))}
         </div>
 
-        <section className="section" style={{background:"var(--surface)"}}>
+        <section className="section" style={{ background: "var(--surface)" }}>
           <div className="section-inner">
-            <h2 className="section-title">Why Choose <span>RideXpress</span>?</h2>
-            <p className="section-sub">Everything you need for a perfect rental experience</p>
+            <h2 className="section-title">
+              Why Choose <span>RideXpress</span>?
+            </h2>
+            <p className="section-sub">
+              Everything you need for a perfect rental experience
+            </p>
             <div className="features-grid">
               {[
-                ["🚗","Huge Fleet","Cars, bikes, SUVs — find the perfect vehicle for any trip or budget."],
-                ["⚡","Instant Booking","Book in minutes with our streamlined, mobile-friendly process."],
-                ["🔒","Secure Payments","Multiple payment options with encrypted, safe transactions."],
-                ["📍","Wide Coverage","Available across major cities and towns throughout Nepal."],
-                ["🛠","24/7 Support","Round-the-clock assistance for any issue, anywhere."],
-                ["💰","Best Prices","Competitive daily rates with no hidden charges or surprises."],
+                [
+                  "🚗",
+                  "Huge Fleet",
+                  "Cars, bikes, SUVs — find the perfect vehicle for any trip or budget.",
+                ],
+                [
+                  "⚡",
+                  "Instant Booking",
+                  "Book in minutes with our streamlined, mobile-friendly process.",
+                ],
+                [
+                  "🔒",
+                  "Secure Payments",
+                  "Multiple payment options with encrypted, safe transactions.",
+                ],
+                [
+                  "📍",
+                  "Wide Coverage",
+                  "Available across major cities and towns throughout Nepal.",
+                ],
+                [
+                  "🛠",
+                  "24/7 Support",
+                  "Round-the-clock assistance for any issue, anywhere.",
+                ],
+                [
+                  "💰",
+                  "Best Prices",
+                  "Competitive daily rates with no hidden charges or surprises.",
+                ],
               ].map(([icon, title, desc]) => (
                 <div className="feature-card" key={title}>
                   <div className="feature-icon">{icon}</div>
@@ -125,8 +175,12 @@ export default function Home() {
         {!user && (
           <div className="cta-section">
             <h2 className="cta-title">Ready to Hit the Road?</h2>
-            <p className="cta-sub">Join thousands of satisfied customers across Nepal</p>
-            <Link to="/signup" className="btn-primary">Get Started — It's Free</Link>
+            <p className="cta-sub">
+              Join thousands of satisfied customers across Nepal
+            </p>
+            <Link to="/signup" className="btn-primary">
+              Get Started — It's Free
+            </Link>
           </div>
         )}
       </div>

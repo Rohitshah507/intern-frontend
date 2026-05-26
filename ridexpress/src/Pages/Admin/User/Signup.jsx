@@ -29,7 +29,8 @@ export default function Signup() {
   });
   const [error, setError] = useState("");
 
-  const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const onChange = (e) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -55,7 +56,9 @@ export default function Signup() {
 
     try {
       const u = await signup(payload);
-      const admin = (u?.roles || []).some((r) => String(r).toUpperCase() === "ADMIN");
+      const admin = (u?.roles || []).some(
+        (r) => String(r).toUpperCase() === "ADMIN",
+      );
       navigate(admin ? "/admin" : "/", { replace: true });
     } catch (err) {
       setError(err.message || "Signup failed");
@@ -134,39 +137,81 @@ export default function Signup() {
       <div className="auth-page">
         <div className="auth-card">
           <div className="auth-title">Create your account</div>
-          <div className="auth-sub">Sign up to book vehicles faster and manage your rentals.</div>
+          <div className="auth-sub">
+            Sign up to book vehicles faster and manage your rentals.
+          </div>
           {error && <div className="auth-error">{error}</div>}
 
           <form onSubmit={onSubmit}>
             <div className="grid">
               <div>
                 <label className="f-label">Role</label>
-                <select className="f-input" name="role" value={form.role} onChange={onChange}>
+                <select
+                  className="f-input"
+                  name="role"
+                  value={form.role}
+                  onChange={onChange}
+                >
                   <option value="USER">User</option>
                   <option value="ADMIN">Admin</option>
                 </select>
               </div>
               <div>
                 <label className="f-label">Full name</label>
-                <input className="f-input" name="name" value={form.name} onChange={onChange} placeholder="Your name" required />
+                <input
+                  className="f-input"
+                  name="name"
+                  value={form.name}
+                  onChange={onChange}
+                  placeholder="Your name"
+                  required
+                />
               </div>
 
               <div>
                 <label className="f-label">Email</label>
-                <input className="f-input" name="email" type="email" value={form.email} onChange={onChange} placeholder="you@example.com" required />
+                <input
+                  className="f-input"
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={onChange}
+                  placeholder="you@example.com"
+                  required
+                />
               </div>
               <div>
                 <label className="f-label">Phone</label>
-                <input className="f-input" name="phone" value={form.phone} onChange={onChange} placeholder="98XXXXXXXX" required />
+                <input
+                  className="f-input"
+                  name="phone"
+                  value={form.phone}
+                  onChange={onChange}
+                  placeholder="98XXXXXXXX"
+                  required
+                />
               </div>
 
               <div>
                 <label className="f-label">City</label>
-                <input className="f-input" name="city" value={form.city} onChange={onChange} placeholder="Kathmandu" required />
+                <input
+                  className="f-input"
+                  name="city"
+                  value={form.city}
+                  onChange={onChange}
+                  placeholder="Kathmandu"
+                  required
+                />
               </div>
               <div>
                 <label className="f-label">Province</label>
-                <select className="f-input" name="province" value={form.province} onChange={onChange} required>
+                <select
+                  className="f-input"
+                  name="province"
+                  value={form.province}
+                  onChange={onChange}
+                  required
+                >
                   {PROVINCES.map((p) => (
                     <option key={p} value={p}>
                       {p}
@@ -177,24 +222,53 @@ export default function Signup() {
 
               <div style={{ gridColumn: "1/-1" }}>
                 <label className="f-label">Street</label>
-                <input className="f-input" name="street" value={form.street} onChange={onChange} placeholder="Street / ward / area" required />
+                <input
+                  className="f-input"
+                  name="street"
+                  value={form.street}
+                  onChange={onChange}
+                  placeholder="Street / ward / area"
+                  required
+                />
               </div>
 
               <div>
                 <label className="f-label">Password</label>
-                <input className="f-input" name="password" type="password" value={form.password} onChange={onChange} placeholder="Minimum 8 characters" required minLength={8} />
+                <input
+                  className="f-input"
+                  name="password"
+                  type="password"
+                  value={form.password}
+                  onChange={onChange}
+                  placeholder="Minimum 8 characters"
+                  required
+                  minLength={8}
+                />
               </div>
               <div>
                 <label className="f-label">Confirm password</label>
-                <input className="f-input" name="confirmPassword" type="password" value={form.confirmPassword} onChange={onChange} placeholder="Re-type password" required minLength={8} />
+                <input
+                  className="f-input"
+                  name="confirmPassword"
+                  type="password"
+                  value={form.confirmPassword}
+                  onChange={onChange}
+                  placeholder="Re-type password"
+                  required
+                  minLength={8}
+                />
               </div>
             </div>
 
             <div className="hint">
-              By signing up as <strong>{form.role === "ADMIN" ? "Admin" : "User"}</strong>, you will be redirected accordingly after signup.
+              By signing up as{" "}
+              <strong>{form.role === "ADMIN" ? "Admin" : "User"}</strong>, you
+              will be redirected accordingly after signup.
             </div>
 
-            <button className="btn" disabled={loading}>{loading ? "Creating account..." : "Sign Up"}</button>
+            <button className="btn" disabled={loading}>
+              {loading ? "Creating account..." : "Sign Up"}
+            </button>
           </form>
 
           <div className="auth-links">

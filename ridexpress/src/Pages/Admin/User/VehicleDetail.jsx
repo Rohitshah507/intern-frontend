@@ -10,37 +10,103 @@ export default function VehicleDetail() {
   const [vehicle, setVehicle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imgIdx, setImgIdx] = useState(0);
-  const [booking, setBooking] = useState({ startDate: "", endDate: "", pickupLocation: "", dropLocation: "", vehicleNumber: "" });
+  const [booking, setBooking] = useState({
+    startDate: "",
+    endDate: "",
+    pickupLocation: "",
+    dropLocation: "",
+    vehicleNumber: "",
+  });
   const [submitting, setSubmitting] = useState(false);
   const [bookingDone, setBookingDone] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    vehicleAPI.getById(id).then(d => setVehicle(d.data || d.vehicle || d)).catch(e => setError(e.message)).finally(() => setLoading(false));
+    vehicleAPI
+      .getById(id)
+      .then((d) => setVehicle(d.data || d.vehicle || d))
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  const days = booking.startDate && booking.endDate
-    ? Math.max(1, Math.ceil((new Date(booking.endDate) - new Date(booking.startDate)) / 86400000))
-    : 0;
+  const days =
+    booking.startDate && booking.endDate
+      ? Math.max(
+          1,
+          Math.ceil(
+            (new Date(booking.endDate) - new Date(booking.startDate)) /
+              86400000,
+          ),
+        )
+      : 0;
   const total = days * (vehicle?.pricePerDay || 0);
 
   const handleBook = async (e) => {
     e.preventDefault();
-    if (!user) { navigate("/login"); return; }
-    setSubmitting(true); setError("");
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    setSubmitting(true);
+    setError("");
     try {
       await bookingAPI.create({
-        ...booking, startDate: booking.startDate, endDate: booking.endDate,
-        bookingItems: [{ vehicle: id, quantity: 1, pricePerDay: vehicle.pricePerDay, subtotal: total }],
-        totalPrice: total, user: user._id,
+        ...booking,
+        startDate: booking.startDate,
+        endDate: booking.endDate,
+        bookingItems: [
+          {
+            vehicle: id,
+            quantity: 1,
+            pricePerDay: vehicle.pricePerDay,
+            subtotal: total,
+          },
+        ],
+        totalPrice: total,
+        user: user._id,
       });
       setBookingDone(true);
-    } catch (err) { setError(err.message); }
-    finally { setSubmitting(false); }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  if (loading) return <div style={{minHeight:"60vh",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--text-dim)",fontFamily:"'Syne',sans-serif",background:"var(--bg)",fontWeight:800}}>Loading vehicle...</div>;
-  if (!vehicle) return <div style={{minHeight:"60vh",display:"flex",alignItems:"center",justifyContent:"center",color:"#b42318",fontFamily:"'Syne',sans-serif",background:"var(--bg)",fontWeight:900}}>Vehicle not found.</div>;
+  if (loading)
+    return (
+      <div
+        style={{
+          minHeight: "60vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "var(--text-dim)",
+          fontFamily: "'Syne',sans-serif",
+          background: "var(--bg)",
+          fontWeight: 800,
+        }}
+      >
+        Loading vehicle...
+      </div>
+    );
+  if (!vehicle)
+    return (
+      <div
+        style={{
+          minHeight: "60vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#b42318",
+          fontFamily: "'Syne',sans-serif",
+          background: "var(--bg)",
+          fontWeight: 900,
+        }}
+      >
+        Vehicle not found.
+      </div>
+    );
 
   return (
     <>
@@ -83,29 +149,83 @@ export default function VehicleDetail() {
           <div>
             {vehicle.imageUrls?.length > 0 ? (
               <>
-                <img className="vd-img-main" src={vehicle.imageUrls[imgIdx]} alt={vehicle.name} />
+                <img
+                  className="vd-img-main"
+                  src={vehicle.imageUrls[imgIdx]}
+                  alt={vehicle.name}
+                />
                 {vehicle.imageUrls.length > 1 && (
                   <div className="vd-thumbs">
                     {vehicle.imageUrls.map((url, i) => (
-                      <img key={i} className={`vd-thumb ${i === imgIdx ? "active" : ""}`} src={url} alt="" onClick={() => setImgIdx(i)} />
+                      <img
+                        key={i}
+                        className={`vd-thumb ${i === imgIdx ? "active" : ""}`}
+                        src={url}
+                        alt=""
+                        onClick={() => setImgIdx(i)}
+                      />
                     ))}
                   </div>
                 )}
               </>
-            ) : <div className="vd-img-placeholder">🚗</div>}
-            <div style={{marginTop:"32px"}}>
+            ) : (
+              <div className="vd-img-placeholder">🚗</div>
+            )}
+            <div style={{ marginTop: "32px" }}>
               <div className="vd-type">{vehicle.type}</div>
               <h1 className="vd-name">{vehicle.name}</h1>
-              <div className="vd-meta">{vehicle.brand} · {vehicle.model}{vehicle.year && ` · ${vehicle.year}`}</div>
-              <div className="vd-price">Rs. {vehicle.pricePerDay?.toLocaleString()}<small> / day</small></div>
-              {vehicle.description && <div className="vd-desc">{vehicle.description}</div>}
-              <div style={{display:"flex",gap:"10px",flexWrap:"wrap"}}>
-                {[["Type", vehicle.type],["Brand", vehicle.brand],["Model", vehicle.model],["Year", vehicle.year]].filter(([,v]) => v).map(([label, val]) => (
-                  <div key={label} style={{background:"#fff",border:"1px solid rgba(17,17,17,0.12)",borderRadius:"12px",padding:"10px 16px"}}>
-                    <div style={{fontSize:"0.7rem",color:"var(--text-dim)",fontWeight:900,marginBottom:"4px",textTransform:"uppercase",letterSpacing:"0.08em"}}>{label}</div>
-                    <div style={{fontSize:"0.9rem",fontWeight:900,color:"var(--text)"}}>{val}</div>
-                  </div>
-                ))}
+              <div className="vd-meta">
+                {vehicle.brand} · {vehicle.model}
+                {vehicle.year && ` · ${vehicle.year}`}
+              </div>
+              <div className="vd-price">
+                Rs. {vehicle.pricePerDay?.toLocaleString()}
+                <small> / day</small>
+              </div>
+              {vehicle.description && (
+                <div className="vd-desc">{vehicle.description}</div>
+              )}
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                {[
+                  ["Type", vehicle.type],
+                  ["Brand", vehicle.brand],
+                  ["Model", vehicle.model],
+                  ["Year", vehicle.year],
+                ]
+                  .filter(([, v]) => v)
+                  .map(([label, val]) => (
+                    <div
+                      key={label}
+                      style={{
+                        background: "#fff",
+                        border: "1px solid rgba(17,17,17,0.12)",
+                        borderRadius: "12px",
+                        padding: "10px 16px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "0.7rem",
+                          color: "var(--text-dim)",
+                          fontWeight: 900,
+                          marginBottom: "4px",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.08em",
+                        }}
+                      >
+                        {label}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          fontWeight: 900,
+                          color: "var(--text)",
+                        }}
+                      >
+                        {val}
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -117,35 +237,139 @@ export default function VehicleDetail() {
               </div>
               {bookingDone ? (
                 <div className="b-success">
-                  <div style={{fontSize:"2rem",marginBottom:"12px"}}>✅</div>
-                  <div style={{fontWeight:700,marginBottom:"8px"}}>Booking Confirmed!</div>
-                  <div style={{fontSize:"0.8rem",color:"var(--text-dim)",fontWeight:700}}>Check My Bookings for details.</div>
-                  <button className="b-btn" style={{marginTop:"16px"}} onClick={() => navigate("/my-bookings")}>View My Bookings</button>
+                  <div style={{ fontSize: "2rem", marginBottom: "12px" }}>
+                    ✅
+                  </div>
+                  <div style={{ fontWeight: 700, marginBottom: "8px" }}>
+                    Booking Confirmed!
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "0.8rem",
+                      color: "var(--text-dim)",
+                      fontWeight: 700,
+                    }}
+                  >
+                    Check My Bookings for details.
+                  </div>
+                  <button
+                    className="b-btn"
+                    style={{ marginTop: "16px" }}
+                    onClick={() => navigate("/my-bookings")}
+                  >
+                    View My Bookings
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={handleBook}>
                   {error && <div className="b-error">{error}</div>}
                   <label className="b-label">Vehicle Number</label>
-                  <input className="b-input" placeholder="e.g. BA 1 KA 1234" value={booking.vehicleNumber} onChange={e => setBooking(b => ({...b, vehicleNumber: e.target.value}))} required />
+                  <input
+                    className="b-input"
+                    placeholder="e.g. BA 1 KA 1234"
+                    value={booking.vehicleNumber}
+                    onChange={(e) =>
+                      setBooking((b) => ({
+                        ...b,
+                        vehicleNumber: e.target.value,
+                      }))
+                    }
+                    required
+                  />
                   <label className="b-label">Start Date</label>
-                  <input className="b-input" type="date" value={booking.startDate} min={new Date().toISOString().split("T")[0]} onChange={e => setBooking(b => ({...b, startDate: e.target.value}))} required />
+                  <input
+                    className="b-input"
+                    type="date"
+                    value={booking.startDate}
+                    min={new Date().toISOString().split("T")[0]}
+                    onChange={(e) =>
+                      setBooking((b) => ({ ...b, startDate: e.target.value }))
+                    }
+                    required
+                  />
                   <label className="b-label">End Date</label>
-                  <input className="b-input" type="date" value={booking.endDate} min={booking.startDate || new Date().toISOString().split("T")[0]} onChange={e => setBooking(b => ({...b, endDate: e.target.value}))} required />
+                  <input
+                    className="b-input"
+                    type="date"
+                    value={booking.endDate}
+                    min={
+                      booking.startDate ||
+                      new Date().toISOString().split("T")[0]
+                    }
+                    onChange={(e) =>
+                      setBooking((b) => ({ ...b, endDate: e.target.value }))
+                    }
+                    required
+                  />
                   <label className="b-label">Pickup Location</label>
-                  <input className="b-input" placeholder="e.g. Thamel, Kathmandu" value={booking.pickupLocation} onChange={e => setBooking(b => ({...b, pickupLocation: e.target.value}))} required />
+                  <input
+                    className="b-input"
+                    placeholder="e.g. Thamel, Kathmandu"
+                    value={booking.pickupLocation}
+                    onChange={(e) =>
+                      setBooking((b) => ({
+                        ...b,
+                        pickupLocation: e.target.value,
+                      }))
+                    }
+                    required
+                  />
                   <label className="b-label">Drop Location</label>
-                  <input className="b-input" placeholder="e.g. Pokhara Bus Park" value={booking.dropLocation} onChange={e => setBooking(b => ({...b, dropLocation: e.target.value}))} required />
+                  <input
+                    className="b-input"
+                    placeholder="e.g. Pokhara Bus Park"
+                    value={booking.dropLocation}
+                    onChange={(e) =>
+                      setBooking((b) => ({
+                        ...b,
+                        dropLocation: e.target.value,
+                      }))
+                    }
+                    required
+                  />
                   {days > 0 && (
                     <div className="b-summary">
-                      <div className="b-row"><span>Duration</span><span>{days} day{days !== 1 ? "s" : ""}</span></div>
-                      <div className="b-row"><span>Rate</span><span>Rs. {vehicle.pricePerDay?.toLocaleString()} / day</span></div>
-                      <div className="b-total"><span>Total</span><span>Rs. {total.toLocaleString()}</span></div>
+                      <div className="b-row">
+                        <span>Duration</span>
+                        <span>
+                          {days} day{days !== 1 ? "s" : ""}
+                        </span>
+                      </div>
+                      <div className="b-row">
+                        <span>Rate</span>
+                        <span>
+                          Rs. {vehicle.pricePerDay?.toLocaleString()} / day
+                        </span>
+                      </div>
+                      <div className="b-total">
+                        <span>Total</span>
+                        <span>Rs. {total.toLocaleString()}</span>
+                      </div>
                     </div>
                   )}
-                  <button className="b-btn" disabled={submitting || !vehicle.available}>
-                    {!vehicle.available ? "Not Available" : submitting ? "Booking..." : "Confirm Booking"}
+                  <button
+                    className="b-btn"
+                    disabled={submitting || !vehicle.available}
+                  >
+                    {!vehicle.available
+                      ? "Not Available"
+                      : submitting
+                        ? "Booking..."
+                        : "Confirm Booking"}
                   </button>
-                  {!user && <p style={{fontSize:"0.75rem",color:"var(--text-dim)",textAlign:"center",marginTop:"10px",fontWeight:800}}>You'll be redirected to login</p>}
+                  {!user && (
+                    <p
+                      style={{
+                        fontSize: "0.75rem",
+                        color: "var(--text-dim)",
+                        textAlign: "center",
+                        marginTop: "10px",
+                        fontWeight: 800,
+                      }}
+                    >
+                      You'll be redirected to login
+                    </p>
+                  )}
                 </form>
               )}
             </div>

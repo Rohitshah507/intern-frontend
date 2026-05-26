@@ -35,7 +35,9 @@ export default function BookVehicle() {
     if (!booking.startDate || !booking.endDate) return 0;
     return Math.max(
       1,
-      Math.ceil((new Date(booking.endDate) - new Date(booking.startDate)) / 86400000)
+      Math.ceil(
+        (new Date(booking.endDate) - new Date(booking.startDate)) / 86400000,
+      ),
     );
   }, [booking.startDate, booking.endDate]);
 
@@ -73,7 +75,13 @@ export default function BookVehicle() {
 
   if (loading) {
     return (
-      <div style={{ padding: "64px 18px", textAlign: "center", color: "var(--text-dim)" }}>
+      <div
+        style={{
+          padding: "64px 18px",
+          textAlign: "center",
+          color: "var(--text-dim)",
+        }}
+      >
         Loading booking…
       </div>
     );
@@ -82,8 +90,13 @@ export default function BookVehicle() {
   if (!vehicle) {
     return (
       <div style={{ padding: "64px 18px", textAlign: "center" }}>
-        <div style={{ fontWeight: 900, fontSize: "1.2rem", marginBottom: 8 }}>Vehicle not found</div>
-        <Link to="/vehicles" style={{ color: "#7a5a00", fontWeight: 900, textDecoration: "none" }}>
+        <div style={{ fontWeight: 900, fontSize: "1.2rem", marginBottom: 8 }}>
+          Vehicle not found
+        </div>
+        <Link
+          to="/vehicles"
+          style={{ color: "#7a5a00", fontWeight: 900, textDecoration: "none" }}
+        >
           Back to vehicles
         </Link>
       </div>
@@ -189,28 +202,55 @@ export default function BookVehicle() {
         <div className="bk-wrap">
           <div className="card">
             {vehicle.imageUrls?.[0] ? (
-              <img className="vimg" src={vehicle.imageUrls[0]} alt={vehicle.name} />
+              <img
+                className="vimg"
+                src={vehicle.imageUrls[0]}
+                alt={vehicle.name}
+              />
             ) : (
-              <div className="vimg" style={{ display: "flex", alignItems: "center", justifyContent: "center", fontSize: "4rem" }}>
+              <div
+                className="vimg"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "4rem",
+                }}
+              >
                 🚗
               </div>
             )}
             <div className="pad">
               <div className="title">{vehicle.name}</div>
               <div className="sub">
-                {vehicle.brand} · {vehicle.model} {vehicle.year ? `· ${vehicle.year}` : ""}
+                {vehicle.brand} · {vehicle.model}{" "}
+                {vehicle.year ? `· ${vehicle.year}` : ""}
               </div>
-              <div className={`badge ${vehicle.available ? "av" : "na"}`}>{vehicle.available ? "Available" : "Unavailable"}</div>
+              <div className={`badge ${vehicle.available ? "av" : "na"}`}>
+                {vehicle.available ? "Available" : "Unavailable"}
+              </div>
 
               <div className="price">
                 Rs. {vehicle.pricePerDay?.toLocaleString()} <small>/ day</small>
               </div>
               <div className="meta">
-                {vehicle.type && <div className="pill">Type: {vehicle.type}</div>}
-                {vehicle.fuelType && <div className="pill">Fuel: {vehicle.fuelType}</div>}
-                {vehicle.transmission && <div className="pill">Transmission: {vehicle.transmission}</div>}
+                {vehicle.type && (
+                  <div className="pill">Type: {vehicle.type}</div>
+                )}
+                {vehicle.fuelType && (
+                  <div className="pill">Fuel: {vehicle.fuelType}</div>
+                )}
+                {vehicle.transmission && (
+                  <div className="pill">
+                    Transmission: {vehicle.transmission}
+                  </div>
+                )}
               </div>
-              {vehicle.description && <div className="sub" style={{ marginTop: 12 }}>{vehicle.description}</div>}
+              {vehicle.description && (
+                <div className="sub" style={{ marginTop: 12 }}>
+                  {vehicle.description}
+                </div>
+              )}
             </div>
           </div>
 
@@ -222,41 +262,131 @@ export default function BookVehicle() {
               {done ? (
                 <div className="ok">
                   <div style={{ fontSize: "2rem", marginBottom: 8 }}>✅</div>
-                  <div style={{ fontWeight: 900, marginBottom: 6 }}>Booking confirmed!</div>
-                  <div style={{ color: "var(--text-dim)", fontWeight: 800, marginBottom: 12 }}>You can review it in My Bookings.</div>
-                  <button className="btn" onClick={() => navigate("/my-bookings")}>Go to My Bookings</button>
+                  <div style={{ fontWeight: 900, marginBottom: 6 }}>
+                    Booking confirmed!
+                  </div>
+                  <div
+                    style={{
+                      color: "var(--text-dim)",
+                      fontWeight: 800,
+                      marginBottom: 12,
+                    }}
+                  >
+                    You can review it in My Bookings.
+                  </div>
+                  <button
+                    className="btn"
+                    onClick={() => navigate("/my-bookings")}
+                  >
+                    Go to My Bookings
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={onSubmit}>
                   {error && <div className="err">{error}</div>}
 
                   <label className="f-label">Vehicle number</label>
-                  <input className="f-input" value={booking.vehicleNumber} onChange={(e) => setBooking((b) => ({ ...b, vehicleNumber: e.target.value }))} placeholder="e.g. BA 1 KA 1234" required />
+                  <input
+                    className="f-input"
+                    value={booking.vehicleNumber}
+                    onChange={(e) =>
+                      setBooking((b) => ({
+                        ...b,
+                        vehicleNumber: e.target.value,
+                      }))
+                    }
+                    placeholder="e.g. BA 1 KA 1234"
+                    required
+                  />
 
                   <label className="f-label">Start date</label>
-                  <input className="f-input" type="date" value={booking.startDate} min={new Date().toISOString().split("T")[0]} onChange={(e) => setBooking((b) => ({ ...b, startDate: e.target.value }))} required />
+                  <input
+                    className="f-input"
+                    type="date"
+                    value={booking.startDate}
+                    min={new Date().toISOString().split("T")[0]}
+                    onChange={(e) =>
+                      setBooking((b) => ({ ...b, startDate: e.target.value }))
+                    }
+                    required
+                  />
 
                   <label className="f-label">End date</label>
-                  <input className="f-input" type="date" value={booking.endDate} min={booking.startDate || new Date().toISOString().split("T")[0]} onChange={(e) => setBooking((b) => ({ ...b, endDate: e.target.value }))} required />
+                  <input
+                    className="f-input"
+                    type="date"
+                    value={booking.endDate}
+                    min={
+                      booking.startDate ||
+                      new Date().toISOString().split("T")[0]
+                    }
+                    onChange={(e) =>
+                      setBooking((b) => ({ ...b, endDate: e.target.value }))
+                    }
+                    required
+                  />
 
                   <label className="f-label">Pickup location</label>
-                  <input className="f-input" value={booking.pickupLocation} onChange={(e) => setBooking((b) => ({ ...b, pickupLocation: e.target.value }))} placeholder="e.g. Thamel, Kathmandu" required />
+                  <input
+                    className="f-input"
+                    value={booking.pickupLocation}
+                    onChange={(e) =>
+                      setBooking((b) => ({
+                        ...b,
+                        pickupLocation: e.target.value,
+                      }))
+                    }
+                    placeholder="e.g. Thamel, Kathmandu"
+                    required
+                  />
 
                   <label className="f-label">Drop location</label>
-                  <input className="f-input" value={booking.dropLocation} onChange={(e) => setBooking((b) => ({ ...b, dropLocation: e.target.value }))} placeholder="e.g. Pokhara Bus Park" required />
+                  <input
+                    className="f-input"
+                    value={booking.dropLocation}
+                    onChange={(e) =>
+                      setBooking((b) => ({
+                        ...b,
+                        dropLocation: e.target.value,
+                      }))
+                    }
+                    placeholder="e.g. Pokhara Bus Park"
+                    required
+                  />
 
                   {!!days && (
                     <div className="sum">
-                      <div className="sum-row"><span>Duration</span><span>{days} day{days !== 1 ? "s" : ""}</span></div>
+                      <div className="sum-row">
+                        <span>Duration</span>
+                        <span>
+                          {days} day{days !== 1 ? "s" : ""}
+                        </span>
+                      </div>
                       <div style={{ height: 8 }} />
-                      <div className="sum-row"><span>Total</span><span>Rs. {total.toLocaleString()}</span></div>
+                      <div className="sum-row">
+                        <span>Total</span>
+                        <span>Rs. {total.toLocaleString()}</span>
+                      </div>
                     </div>
                   )}
 
-                  <button className="btn" disabled={submitting || !vehicle.available}>
-                    {!vehicle.available ? "Not available" : submitting ? "Booking..." : "Confirm booking"}
+                  <button
+                    className="btn"
+                    disabled={submitting || !vehicle.available}
+                  >
+                    {!vehicle.available
+                      ? "Not available"
+                      : submitting
+                        ? "Booking..."
+                        : "Confirm booking"}
                   </button>
-                  <button className="ghost" type="button" onClick={() => navigate(`/vehicles/${id}`)}>Back to vehicle</button>
+                  <button
+                    className="ghost"
+                    type="button"
+                    onClick={() => navigate(`/vehicles/${id}`)}
+                  >
+                    Back to vehicle
+                  </button>
                 </form>
               )}
             </div>
@@ -266,4 +396,3 @@ export default function BookVehicle() {
     </>
   );
 }
-

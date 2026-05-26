@@ -15,7 +15,9 @@ async function request(endpoint, options = {}) {
   try {
     res = await fetch(`${BASE_URL}${endpoint}`, config);
   } catch (error) {
-    throw new Error("Cannot connect to the backend server. Check API URL and make sure the backend is running.");
+    throw new Error(
+      "Cannot connect to the backend server. Check API URL and make sure the backend is running.",
+    );
   }
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.message || "Request failed");
@@ -25,19 +27,25 @@ async function request(endpoint, options = {}) {
 export const authAPI = {
   signup: (body) => request("/auth/signup", { method: "POST", body }),
   login: (body) => request("/auth/login", { method: "POST", body }),
-  forgotPassword: (body) => request("/auth/forgot-password", { method: "POST", body }),
+  forgotPassword: (body) =>
+    request("/auth/forgot-password", { method: "POST", body }),
   resetPassword: ({ token, userId, ...body }) =>
-    request(`/auth/reset-password?token=${encodeURIComponent(token)}&userId=${encodeURIComponent(userId)}`, {
-      method: "POST",
-      body,
-    }),
+    request(
+      `/auth/reset-password?token=${encodeURIComponent(token)}&userId=${encodeURIComponent(userId)}`,
+      {
+        method: "POST",
+        body,
+      },
+    ),
 };
 
 export const vehicleAPI = {
   getAll: (params = "") => request(`/vehicles${params}`),
   getById: (id) => request(`/vehicles/${id}`),
-  create: (formData) => request("/vehicles", { method: "POST", body: formData }),
-  update: (id, formData) => request(`/vehicles/${id}`, { method: "PUT", body: formData }),
+  create: (formData) =>
+    request("/vehicles", { method: "POST", body: formData }),
+  update: (id, formData) =>
+    request(`/vehicles/${id}`, { method: "PUT", body: formData }),
   delete: (id) => request(`/vehicles/${id}`, { method: "DELETE" }),
 };
 
@@ -48,6 +56,8 @@ export const bookingAPI = {
   create: (body) => request("/booking", { method: "POST", body }),
   update: (id, body) => request(`/booking/${id}`, { method: "PUT", body }),
   delete: (id) => request(`/booking/${id}`, { method: "DELETE" }),
-  initiatePayment: (id, body) => request(`/booking/${id}/payment`, { method: "POST", body }),
-  confirmPayment: (id, body) => request(`/booking/${id}/payment/confirm`, { method: "PUT", body }),
+  initiatePayment: (id, body) =>
+    request(`/booking/${id}/payment`, { method: "POST", body }),
+  confirmPayment: (id, body) =>
+    request(`/booking/${id}/payment/confirm`, { method: "PUT", body }),
 };

@@ -10,14 +10,17 @@ export default function Login() {
   const [error, setError] = useState("");
   const [show, setShow] = useState(false);
 
-  const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const onChange = (e) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
       const u = await login(form);
-      const admin = (u?.roles || []).some((r) => String(r).toUpperCase() === "ADMIN");
+      const admin = (u?.roles || []).some(
+        (r) => String(r).toUpperCase() === "ADMIN",
+      );
       navigate(admin ? "/admin" : "/", { replace: true });
     } catch (err) {
       setError(err.message || "Login failed");
@@ -97,23 +100,48 @@ export default function Login() {
       <div className="auth-page">
         <div className="auth-card">
           <div className="auth-title">Welcome back</div>
-          <div className="auth-sub">Log in to manage your bookings and account.</div>
+          <div className="auth-sub">
+            Log in to manage your bookings and account.
+          </div>
           {error && <div className="auth-error">{error}</div>}
           <form onSubmit={onSubmit}>
             <label className="f-label">Email</label>
-            <input className="f-input" name="email" type="email" placeholder="you@example.com" value={form.email} onChange={onChange} required />
+            <input
+              className="f-input"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              value={form.email}
+              onChange={onChange}
+              required
+            />
 
             <div style={{ height: 12 }} />
 
             <label className="f-label">Password</label>
             <div className="row">
-              <input className="f-input grow" name="password" type={show ? "text" : "password"} placeholder="••••••••" value={form.password} onChange={onChange} required />
-              <button type="button" className="toggle" onClick={() => setShow((s) => !s)} aria-label="Toggle password visibility">
+              <input
+                className="f-input grow"
+                name="password"
+                type={show ? "text" : "password"}
+                placeholder="••••••••"
+                value={form.password}
+                onChange={onChange}
+                required
+              />
+              <button
+                type="button"
+                className="toggle"
+                onClick={() => setShow((s) => !s)}
+                aria-label="Toggle password visibility"
+              >
                 {show ? "Hide" : "Show"}
               </button>
             </div>
 
-            <button className="btn" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
+            <button className="btn" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
+            </button>
           </form>
 
           <div className="auth-links">

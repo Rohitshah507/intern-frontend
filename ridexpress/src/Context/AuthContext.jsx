@@ -5,8 +5,11 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("rxUser")) || null; }
-    catch { return null; }
+    try {
+      return JSON.parse(localStorage.getItem("rxUser")) || null;
+    } catch {
+      return null;
+    }
   });
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +21,9 @@ export function AuthProvider({ children }) {
       setUser(userData);
       localStorage.setItem("rxUser", JSON.stringify(userData));
       return userData;
-    } finally { setLoading(false); }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const signup = async (payload) => {
@@ -29,7 +34,9 @@ export function AuthProvider({ children }) {
       setUser(userData);
       localStorage.setItem("rxUser", JSON.stringify(userData));
       return userData;
-    } finally { setLoading(false); }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const logout = () => {
@@ -37,10 +44,14 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("rxUser");
   };
 
-  const isAdmin = (user?.roles || []).some((r) => String(r).toUpperCase() === "ADMIN");
+  const isAdmin = (user?.roles || []).some(
+    (r) => String(r).toUpperCase() === "ADMIN",
+  );
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout, isAdmin }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, signup, logout, isAdmin }}
+    >
       {children}
     </AuthContext.Provider>
   );

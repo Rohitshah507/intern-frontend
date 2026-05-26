@@ -14,8 +14,14 @@ export default function AdminLayout() {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
 
-  const handleLogout = () => { logout(); navigate("/login"); };
-  const isActive = (path) => path === "/admin" ? location.pathname === path : location.pathname.startsWith(path);
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+  const isActive = (path) =>
+    path === "/admin"
+      ? location.pathname === path
+      : location.pathname.startsWith(path);
 
   return (
     <>
@@ -83,12 +89,34 @@ export default function AdminLayout() {
       <div className="admin-wrap">
         <aside className="admin-sidebar">
           <div className="sidebar-top">
-            {!collapsed && <div className="sidebar-logo">Ride<span>X</span> <span style={{color:"var(--text-dim)",fontSize:"0.7rem",fontWeight:900}}>ADMIN</span></div>}
-            <button className="collapse-btn" onClick={() => setCollapsed(!collapsed)}>{collapsed ? "→" : "←"}</button>
+            {!collapsed && (
+              <div className="sidebar-logo">
+                Ride<span>X</span>{" "}
+                <span
+                  style={{
+                    color: "var(--text-dim)",
+                    fontSize: "0.7rem",
+                    fontWeight: 900,
+                  }}
+                >
+                  ADMIN
+                </span>
+              </div>
+            )}
+            <button
+              className="collapse-btn"
+              onClick={() => setCollapsed(!collapsed)}
+            >
+              {collapsed ? "→" : "←"}
+            </button>
           </div>
           <nav className="sidebar-nav">
             {NAV.map(({ path, label, icon }) => (
-              <Link key={path} to={path} className={`sidebar-link ${isActive(path) ? "active" : ""}`}>
+              <Link
+                key={path}
+                to={path}
+                className={`sidebar-link ${isActive(path) ? "active" : ""}`}
+              >
                 <span className="sidebar-icon">{icon}</span>
                 {!collapsed && label}
               </Link>
@@ -96,21 +124,27 @@ export default function AdminLayout() {
           </nav>
           <div className="sidebar-bottom">
             <div className="admin-user-info">
-              <div className="admin-avatar">{user?.name?.[0]?.toUpperCase() || "A"}</div>
+              <div className="admin-avatar">
+                {user?.name?.[0]?.toUpperCase() || "A"}
+              </div>
               {!collapsed && (
                 <div>
-                  <div className="admin-name">{user?.name?.split(" ")[0] || "Admin"}</div>
+                  <div className="admin-name">
+                    {user?.name?.split(" ")[0] || "Admin"}
+                  </div>
                   <div className="admin-role">Administrator</div>
                 </div>
               )}
             </div>
-            <button className="logout-btn" onClick={handleLogout}>{collapsed ? "↩" : "Logout"}</button>
+            <button className="logout-btn" onClick={handleLogout}>
+              {collapsed ? "↩" : "Logout"}
+            </button>
           </div>
         </aside>
         <div className="admin-main">
           <div className="admin-topbar">
             <span className="topbar-title">
-              {NAV.find(n => isActive(n.path))?.label || "Admin"}
+              {NAV.find((n) => isActive(n.path))?.label || "Admin"}
             </span>
             <span className="topbar-badge">Admin Panel</span>
           </div>

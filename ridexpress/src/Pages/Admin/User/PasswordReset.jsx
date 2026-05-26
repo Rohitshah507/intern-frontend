@@ -98,16 +98,30 @@ export function ForgotPassword() {
         <div className="auth-card">
           <div className="auth-title">Reset your password</div>
           <div className="auth-sub">
-            Enter your email and we’ll send you a reset link (if the account exists).
+            Enter your email and we’ll send you a reset link (if the account
+            exists).
           </div>
 
           {error && <div className="auth-error">{error}</div>}
-          {done && <div className="auth-success">If your email exists in our system, a reset link has been sent.</div>}
+          {done && (
+            <div className="auth-success">
+              If your email exists in our system, a reset link has been sent.
+            </div>
+          )}
 
           <form onSubmit={onSubmit}>
             <label className="f-label">Email</label>
-            <input className="f-input" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="you@example.com" required />
-            <button className="btn" disabled={loading}>{loading ? "Sending..." : "Send reset link"}</button>
+            <input
+              className="f-input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
+            <button className="btn" disabled={loading}>
+              {loading ? "Sending..." : "Send reset link"}
+            </button>
           </form>
 
           <div className="auth-links">
@@ -131,7 +145,8 @@ export function ResetPassword() {
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
 
-  const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const onChange = (e) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -220,26 +235,57 @@ export function ResetPassword() {
       <div className="auth-page">
         <div className="auth-card">
           <div className="auth-title">Set a new password</div>
-          <div className="auth-sub">Choose a strong password to secure your account.</div>
+          <div className="auth-sub">
+            Choose a strong password to secure your account.
+          </div>
 
           {error && <div className="auth-error">{error}</div>}
-          {done && <div className="auth-success">Password updated. Redirecting to login…</div>}
+          {done && (
+            <div className="auth-success">
+              Password updated. Redirecting to login…
+            </div>
+          )}
 
           <form onSubmit={onSubmit}>
             <label className="f-label">New password</label>
-            <input className="f-input" name="password" type="password" value={form.password} onChange={onChange} minLength={8} required />
+            <input
+              className="f-input"
+              name="password"
+              type="password"
+              value={form.password}
+              onChange={onChange}
+              minLength={8}
+              required
+            />
 
             <div style={{ height: 12 }} />
 
             <label className="f-label">Confirm new password</label>
-            <input className="f-input" name="confirmPassword" type="password" value={form.confirmPassword} onChange={onChange} minLength={8} required />
+            <input
+              className="f-input"
+              name="confirmPassword"
+              type="password"
+              value={form.confirmPassword}
+              onChange={onChange}
+              minLength={8}
+              required
+            />
 
-            <button className="btn" disabled={loading || done}>{loading ? "Updating..." : "Update password"}</button>
+            <button className="btn" disabled={loading || done}>
+              {loading ? "Updating..." : "Update password"}
+            </button>
           </form>
 
           <div className="muted">
             If your reset link is expired, request a new one from{" "}
-            <Link to="/forgot-password" style={{ fontWeight: 900, color: "#7a5a00", textDecoration: "none" }}>
+            <Link
+              to="/forgot-password"
+              style={{
+                fontWeight: 900,
+                color: "#7a5a00",
+                textDecoration: "none",
+              }}
+            >
               Forgot Password
             </Link>
             .
